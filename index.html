@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>WebSocket Connection</h1>
+    <div id="message-container">
+        <!-- Сюда будут выводиться сообщения с сервера -->
+    </div>
+
+    <script>
+        const webSocket = new WebSocket("wss://cb6b-95-24-163-169.ngrok-free.app/ws/");
+
+        webSocket.onopen = (event) => {
+            console.log("WebSocket connection established.");
+        };
+
+        webSocket.onmessage = (event) => {
+            const messageContainer = document.getElementById("message-container");
+            const messageDiv = document.createElement("div");
+            messageDiv.textContent = event.data;
+            messageContainer.appendChild(messageDiv);
+        };
+
+        webSocket.onclose = (event) => {
+            console.log("WebSocket connection closed.");
+        };
+
+        webSocket.onerror = (error) => {
+            console.error("WebSocket error:", error);
+        };
+
+        // Функция для отправки сообщения на сервер
+        function sendMessage(message) {
+            webSocket.send(message);
+        }
+
+        // Пример использования функции отправки сообщения
+        //sendMessage("Hello, server!");
+
+    </script>
+</body>
+</html>
